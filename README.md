@@ -1,561 +1,762 @@
-# Self-Improving LLM Evaluation Framework
+
+# Intune - Self-Improving LLM Evaluation Framework
 
 An end-to-end framework for training, evaluating, and iteratively improving Large Language Models with automated feedback loops.
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-18+-61DAFB.svg)](https://reactjs.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Active-success.svg)]()
 
 ---
 
-## Team Members
+## 👥 Team Members
 
-| Name                      | Roll Number |
-|---------------------------|-------------|
-| Radhakrishna Bharuka      | 24BDS063    |
-| Abhang Pawar              | 24BDS054    |
-| Nilesh Dwivedi            | 24BDS048    |
-| Rushikesh Masalkar        | 24BDS040    |
+| Name                      | Roll Number | GitHub Profile |
+|---------------------------|-------------|----------------|
+| Radhakrishna Bharuka      | 24BDS063    | [@RK0297](https://github.com/RK0297) |
+| Abhang Pawar              | 24BDS054    | [@abhangpawar](https://github.com/abhangpawar) |
+| Nilesh Dwivedi            | 24BDS048    | [@nilesh](https://github.com/nilesh) |
+| Rushikesh Masalkar        | 24BDS040    | [@rushikesh](https://github.com/rushikesh) |
 
 ---
 
-## Table of Contents
+## 📑 Table of Contents
 
-- [Overview](#overview)
+- [Project Overview](#project-overview)
 - [Demo Video](#demo-video)
-- [Features](#features)
-- [System Architecture](#system-architecture)
-- [Repository Structure](#repository-structure)
-- [Installation Process](#installation-process)
-- [Execution Guide](#execution-guide)
-- [Evaluation Metrics](#evaluation-metrics)
-- [API Documentation](#api-documentation)
+- [Key Features](#key-features)
 - [Technology Stack](#technology-stack)
-- [Documentation](#documentation)
+- [Repository Structure](#repository-structure)
+- [System Architecture](#system-architecture)
+- [Workflows](#workflows)
+- [Installation & Setup](#installation--setup)
+- [Configuration](#configuration)
+- [Usage Instructions](#usage-instructions)
+- [Code Examples](#code-examples)
+- [API Documentation](#api-documentation)
+- [Deployment](#deployment)
+- [Testing](#testing)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
 - [License](#license)
+- [Acknowledgments](#acknowledgments)
 
 ---
 
-## Overview
+## 🎯 Project Overview
 
-This framework implements a self-improving Large Language Model system that:
+### What is Intune?
 
-- Automatically collects training data from user interactions
-- Evaluates model quality using 8 comprehensive metrics
-- Fine-tunes models using efficient LoRA (Low-Rank Adaptation) adapters
-- Measures improvements quantitatively with before/after comparisons
-- Operates continuously with background workers
-- Scales efficiently on consumer GPUs (8GB VRAM minimum)
+Intune is a comprehensive framework that enables **self-improving Large Language Models** through automated training, evaluation, and refinement cycles. The system continuously learns from user interactions and improves its performance without manual intervention.
 
----
+### High-Level Overview
 
-## Demo Video
+The framework implements a **closed-loop improvement system** where:
 
-**2-Minute Working Demo**
+1. **Users interact** with the AI through a web interface
+2. **Responses are generated** using a base LLM (Gemma 1B)
+3. **Quality metrics** are computed automatically (8 distinct metrics)
+4. **Training data** is accumulated from interactions
+5. **Fine-tuning** triggers automatically when thresholds are met
+6. **Improved model** replaces the base model
+7. **Cycle repeats** for continuous improvement
 
-[![Demo Video Preview](docs/intune_landingpage.png)](https://github.com/Self-eval-llm/Intune-Backend/blob/main/docs/demo_video.mp4)
+### Key Capabilities
 
-**[Click here to watch the full demo video](https://github.com/Self-eval-llm/Intune-Backend/blob/main/docs/demo_video.mp4)**
-
-The demo video demonstrates:
-- User interactions through the chat interface
-- Real-time response generation from the model
-- Background evaluation workers computing metrics
-- Fine-tuning process triggering automatically
-- Before and after comparison of model improvements
-
----
-
-## Features
-
-### Automated Training Pipeline
-- Continuous data collection from user interactions
-- Automatic dataset preparation and validation
-- Threshold-based fine-tuning trigger (configurable)
-
-### Comprehensive Evaluation System
-- 8 distinct quality metrics for thorough assessment
-- Before and after comparison reports
-- Real-time metric computation
-
-### Efficient Fine-tuning
-- LoRA-based fine-tuning for memory efficiency
-- Runs on consumer GPUs with 8GB+ VRAM
-- Checkpoint saving every 100 steps
-
-### Background Workers
-- Asynchronous metric computation
-- Automated fine-tuning workflow
-- Continuous monitoring and processing
+✅ **Automated Data Collection** - Captures user interactions in real-time  
+✅ **Comprehensive Evaluation** - 8 metrics covering relevancy, precision, recall, faithfulness, toxicity, and hallucinations  
+✅ **Efficient Fine-tuning** - LoRA adapters enable training on consumer GPUs (8GB+ VRAM)  
+✅ **Background Processing** - Workers handle evaluation and training asynchronously  
+✅ **Quantifiable Improvements** - Before/after comparison with detailed reports  
+✅ **Scalable Architecture** - Microservices design with separate frontend, backend, and workers  
 
 ---
 
-## System Architecture
+## 🎬 Demo Video
 
-### High-Level Component Diagram
+### 2-Minute Working Application Demo
+
+[![Intune Demo](https://img.shields.io/badge/▶-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://github.com/Self-eval-llm/Intune-Backend/blob/main/docs/demo_video.mp4)
+
+**Video Preview:**
+
+![Landing Page](https://raw.githubusercontent.com/Self-eval-llm/Intune-Backend/main/docs/intune_landingpage.png)
+
+**Demo Highlights:**
+- 🎨 User interface walkthrough
+- 💬 Real-time chat interactions with the AI
+- 📊 Live metric computation visualization
+- 🔄 Background worker operations
+- 📈 Before/after performance comparison
+- 🚀 Complete end-to-end workflow
+
+---
+
+## ✨ Key Features
+
+### 1. Automated Training Pipeline
+
+```mermaid
+graph LR
+    A[User Query] --> B[Generate Response]
+    B --> C[Store in DB]
+    C --> D[Compute Metrics]
+    D --> E{Threshold<br/>Reached?}
+    E -->|No| A
+    E -->|Yes| F[Fine-tune Model]
+    F --> G[Deploy Improved Model]
+    G --> A
+```
+
+- **Continuous Learning:** System learns from every interaction
+- **Smart Triggers:** Fine-tuning activates based on configurable thresholds
+- **Data Validation:** Automatic quality checks before training
+- **Incremental Updates:** Preserves previous knowledge while learning new patterns
+
+### 2. Comprehensive 8-Metric Evaluation System
+
+| Metric | Type | Range | Description |
+|--------|------|-------|-------------|
+| Answer Relevancy | Positive | 0-1 | How relevant the answer is to the question |
+| Contextual Precision | Positive | 0-1 | Answer content supported by context |
+| Contextual Recall | Positive | 0-1 | Context coverage in the answer |
+| Contextual Relevancy | Positive | 0-1 | Semantic similarity between context and answer |
+| Faithfulness | Positive | 0-1 | Alignment with reference and context |
+| Toxicity | Negative | 0-1 | Presence of harmful language |
+| Hallucination Rate | Negative | 0-1 | Unsupported information |
+| Overall Score | Aggregate | 0-1 | Balanced combination of all metrics |
+
+### 3. Efficient LoRA-Based Fine-tuning
+
+- **Memory Efficient:** Runs on 8GB VRAM GPUs (RTX 4060+)
+- **Fast Training:** 3 epochs complete in ~15-30 minutes
+- **Checkpoint System:** Auto-save every 100 steps
+- **Adapter Merging:** Seamless integration with base model
+
+### 4. Background Worker Architecture
+
+- **Worker 1 (eval_first):** Computes base model metrics
+- **Worker 2 (eval_finetune):** Handles training and final evaluation
+- **Asynchronous Processing:** Non-blocking operations
+- **Fault Tolerant:** Automatic retry on failures
+
+---
+
+## 🛠 Technology Stack
+
+### Frontend
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| **React** | 18+ | UI framework |
+| **TypeScript** | 5+ | Type-safe JavaScript |
+| **Vite** | 5+ | Build tool and dev server |
+| **Tailwind CSS** | 3+ | Utility-first styling |
+| **Axios** | 1.6+ | HTTP client |
+
+### Backend
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| **Python** | 3.10+ | Core programming language |
+| **FastAPI** | 0.104+ | Web framework |
+| **Uvicorn** | 0.24+ | ASGI server |
+| **Pydantic** | 2.0+ | Data validation |
+
+### Machine Learning
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| **Ollama** | Latest | Local LLM inference |
+| **Gemma** | 1B | Base language model |
+| **GPT-OSS** | 20B | Teacher model |
+| **Unsloth** | Latest | Fast fine-tuning |
+| **LoRA** | - | Parameter-efficient training |
+| **Transformers** | 4.36+ | Model loading and inference |
+| **PyTorch** | 2.1+ | Deep learning framework |
+
+### Database & Infrastructure
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| **Supabase** | Cloud | PostgreSQL database |
+| **CUDA** | 12.1+ | GPU acceleration |
+| **Git Submodules** | - | Multi-repo management |
+
+---
+
+## 📁 Repository Structure
+
+### Main Repository (Intune)
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                   SELF-IMPROVING LLM FRAMEWORK                  │
-│                                                                 │
-│  ┌──────────────┐         ┌──────────────┐         ┌──────────────┐
-│  │   FRONTEND   │◄───────►│   BACKEND    │◄───────►│   DATABASE   │
-│  │  (React/Vue) │  REST   │   (FastAPI)  │  SQL    │  (Supabase)  │
-│  │              │   API   │              │         │              │
-│  │  Port: 5173  │         │  Port: 8000  │         │    Cloud     │
-│  └──────────────┘         └──────────────┘         └──────────────┘
-│                                   │                                    
-│                                   │                                    
-│                          ┌────────┴────────┐                          
-│                          │                 │                          
-│                    ┌─────▼─────┐    ┌─────▼─────┐                   
-│                    │  Worker 1  │    │  Worker 2  │                   
-│                    │ eval_first │    │eval_finetune│                  
-│                    │ (Metrics)  │    │ (Training) │                   
-│                    └────────────┘    └────────────┘                   
-│                          │                 │                          
-│                          └────────┬────────┘                          
-│                                   │                                    
-│                          ┌────────▼────────┐                          
-│                          │  OLLAMA SERVER  │                          
-│                          │  Port: 11434    │                          
-│                          │                 │                          
-│                          │  - Gemma 1B     │                          
-│                          │  - GPT-OSS 20B  │                          
-│                          │  - Fine-tuned   │                          
-│                          └─────────────────┘                          
-└─────────────────────────────────────────────────────────────────┘
+RK0297/Intune/
+│
+├── .gitmodules                    # Submodule configuration
+├── .vscode/                       # VS Code settings
+├── README.md                      # This file
+│
+├── Intune-Frontend/              # [SUBMODULE] React frontend
+│   ├── src/
+│   │   ├── components/           # React components
+│   │   ├── pages/                # Page components
+│   │   ├── services/             # API service layer
+│   │   ├── hooks/                # Custom React hooks
+│   │   ├── utils/                # Utility functions
+│   │   └── App.tsx               # Root component
+│   ├── public/                   # Static assets
+│   ├── package.json              # Node dependencies
+│   ├── tsconfig.json             # TypeScript config
+│   ├── vite.config.ts            # Vite configuration
+│   └── tailwind.config.js        # Tailwind CSS config
+│
+├── Intune_Backend/               # [SUBMODULE] Main backend (Ollama)
+│   ├── app/
+│   │   ├── app.py                # FastAPI server (Port 8000)
+│   │   ├── eval_first.py         # Worker 1: Base evaluation
+│   │   └── eval_finetune.py      # Worker 2: Fine-tuning
+│   ├── src/
+│   │   ├── data_generation/      # Training data pipeline
+│   │   │   ├── teacher.py        # Generate reference answers
+│   │   │   ├── student.py        # Generate base outputs
+│   │   │   └── prepare_data.py   # Format for training
+│   │   ├── training/
+│   │   │   └── finetune.py       # LoRA fine-tuning logic
+│   │   ├── evaluation/
+│   │   │   ├── update_metrics.py # Compute base metrics
+│   │   │   └── evaluate_finetuned.py # Final evaluation
+│   │   ├── metrics/
+│   │   │   └── llm_eval.py       # 8 metrics implementation
+│   │   └── database/
+│   │       └── supabase_client.py # Database interface
+│   ├── docs/
+│   │   ├── AI_report.pdf         # Technical documentation
+│   │   ├── demo_video.mp4        # Working demo
+│   │   └── *.png                 # Diagrams and screenshots
+│   ├── sql/
+│   │   └── *.sql                 # Database schemas
+│   ├── requirements.txt          # Python dependencies
+│   └── .env                      # Environment variables
+│
+└── Intune_OpenAI_Backend/        # [SUBMODULE] OpenAI alternative backend
+    ├── app/
+    │   └── app.py                # FastAPI with OpenAI integration
+    ├── src/
+    │   └── openai_client.py      # OpenAI API wrapper
+    └── requirements.txt          # Python dependencies
 ```
 
-### Data Flow Diagram
+### Submodule Repositories
 
+| Submodule | Repository URL | Purpose |
+|-----------|---------------|---------|
+| **Intune-Frontend** | [Self-eval-llm/Intune-Frontend](https://github.com/Self-eval-llm/Intune-Frontend) | React-based web interface |
+| **Intune_Backend** | [Self-eval-llm/Intune-Backend](https://github.com/Self-eval-llm/Intune-Backend) | Main backend with Ollama |
+| **Intune_OpenAI_Backend** | [Self-eval-llm/Intune_OpenAI_Backend](https://github.com/Self-eval-llm/Intune_OpenAI_Backend) | Alternative OpenAI backend |
+
+---
+
+## 🏗 System Architecture
+
+### Component Interaction Diagram
+
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        UI[React Frontend<br/>Port 5173]
+    end
+    
+    subgraph "API Layer"
+        API[FastAPI Server<br/>Port 8000]
+    end
+    
+    subgraph "Processing Layer"
+        W1[Worker 1<br/>Evaluation]
+        W2[Worker 2<br/>Fine-tuning]
+    end
+    
+    subgraph "Model Layer"
+        OLLAMA[Ollama Server<br/>Port 11434]
+        GEMMA[Gemma 1B<br/>Base Model]
+        TUNED[Gemma 1B<br/>Fine-tuned]
+    end
+    
+    subgraph "Data Layer"
+        DB[(Supabase<br/>PostgreSQL)]
+    end
+    
+    UI -->|HTTP POST /generate| API
+    API -->|Store interaction| DB
+    API -->|Generate response| OLLAMA
+    OLLAMA --> GEMMA
+    OLLAMA --> TUNED
+    W1 -->|Poll records| DB
+    W1 -->|Compute metrics| DB
+    W2 -->|Check threshold| DB
+    W2 -->|Fine-tune| GEMMA
+    W2 -->|Deploy| TUNED
+    W2 -->|Final evaluation| DB
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    SELF-IMPROVEMENT LOOP                        │
-└─────────────────────────────────────────────────────────────────┘
 
-Step 1: USER INTERACTION
-  ┌─────────────────┐
-  │ User submits    │
-  │ a question      │
-  └────────┬────────┘
-           │
-           ▼
-Step 2: RESPONSE GENERATION
-  ┌─────────────────┐
-  │ Gemma 1B Model  │
-  │ generates answer│
-  └────────┬────────┘
-           │
-           ▼
-Step 3: DATABASE STORAGE
-  ┌─────────────────────┐
-  │ Save to Supabase    │
-  │ status: 'created'   │
-  └────────┬────────────┘
-           │
-           ▼
-Step 4: FIRST EVALUATION
-  ┌─────────────────────────────────┐
-  │ Compute 8 metrics:              │
-  │ - Answer Relevancy              │
-  │ - Contextual Precision          │
-  │ - Faithfulness                  │
-  │ - Toxicity                      │
-  │ - Overall Score                 │
-  │ - And 3 more                    │
-  │ status: 'done'                  │
-  └────────┬────────────────────────┘
-           │
-           ▼
-Step 5: DATA ACCUMULATION
-  ┌─────────────────────┐
-  │ Collect N records   │
-  │ (default: 5000)     │
-  └────────┬────────────┘
-           │
-           ▼
-Step 6: FINE-TUNING
-  ┌─────────────────────────────────┐
-  │ Trigger at threshold            │
-  │ - Prepare training data         │
-  │ - Apply LoRA adapters           │
-  │ - Train for 3 epochs            │
-  │ - Save improved model           │
-  └────────┬────────────────────────┘
-           │
-           ▼
-Step 7: FINAL EVALUATION
-  ┌─────────────────────────────────┐
-  │ Re-evaluate with fine-tuned     │
-  │ model and compare results:      │
-  │                                 │
-  │ Base Model → Fine-tuned Model   │
-  │ Score: 0.65 → Score: 0.78       │
-  │ Improvement: +20%               │
-  └────────┬────────────────────────┘
-           │
-           ▼
-Step 8: DEPLOY AND REPEAT
-  ┌─────────────────────┐
-  │ Use improved model  │
-  │ for new interactions│
-  │ Loop back to Step 1 │
-  └─────────────────────┘
+### Network Architecture
+
+```mermaid
+graph LR
+    subgraph "External Access"
+        USER[User Browser]
+    end
+    
+    subgraph "Frontend Server - localhost:5173"
+        FE[Vite Dev Server]
+    end
+    
+    subgraph "Backend Server - localhost:8000"
+        BE[FastAPI + Workers]
+    end
+    
+    subgraph "ML Server - localhost:11434"
+        ML[Ollama]
+    end
+    
+    subgraph "Cloud Database"
+        CLOUD[(Supabase)]
+    end
+    
+    USER -->|HTTPS| FE
+    FE -->|REST API| BE
+    BE -->|SQL| CLOUD
+    BE -->|HTTP| ML
 ```
 
 ---
 
-## Repository Structure
+## 🔄 Workflows
 
-```
-Intune-Backend/
-│
-├── .env                          # Environment variables (Supabase credentials)
-├── .gitignore                    # Git ignore rules
-├── Modelfile                     # Ollama model configuration
-├── requirements.txt              # Core dependencies
-├── requirements_finetune.txt     # Fine-tuning dependencies
-├── README.md                     # This file
-│
-├── app/                          # APPLICATION LAYER
-│   ├── app.py                    # Main FastAPI server (Port 8000)
-│   ├── eval_first.py             # Worker 1: Base metrics evaluation
-│   ├── eval_finetune.py          # Worker 2: Fine-tuning and final evaluation
-│   └── README.md                 # API documentation
-│
-├── src/                          # SOURCE CODE LAYER
-│   │
-│   ├── data_generation/          # Data pipeline
-│   │   ├── teacher.py            # Generate training examples (GPT-OSS)
-│   │   ├── student.py            # Generate base outputs (Gemma)
-│   │   └── prepare_data.py       # Format for training (JSONL)
-│   │
-│   ├── training/                 # Model fine-tuning
-│   │   └── finetune.py           # LoRA-based training
-│   │
-│   ├── evaluation/               # Quality assessment
-│   │   ├── update_metrics.py     # Compute base metrics
-│   │   ├── evaluate_finetuned.py # Compare base vs tuned
-│   │   ├── evaluate_ollama.py    # Test deployed models
-│   │   └── generate_report.py    # Create comparison reports
-│   │
-│   ├── metrics/                  # Evaluation engine
-│   │   └── llm_eval.py           # 8 metrics implementation
-│   │
-│   ├── database/                 # Database abstraction
-│   │   └── supabase_client.py    # Supabase connection and utilities
-│   │
-│   └── utils/                    # Helper functions
-│
-├── docs/                         # DOCUMENTATION AND MEDIA
-│   ├── AI_report.pdf             # Comprehensive project report
-│   ├── AI_PPT.pptx               # Project presentation
-│   ├── result.pdf                # Evaluation results
-│   ├── demo_video.mp4            # Working demo video (2 minutes)
-│   ├── intune_landingpage.png    # Landing page screenshot
-│   ├── Full_workflow.png         # Complete workflow diagram
-│   ├── basic_workflow_figma.png  # Simplified workflow
-│   └── db_schema.png             # Database schema diagram
-│
-├── sql/                          # DATABASE SCHEMAS
-│   ├── supabase_setup.sql        # Initial table setup
-│   ├── supabase_add_metrics.sql  # Add metric columns
-│   ├── add_tuned_columns.sql     # Add fine-tuned columns
-│   └── create_decimal_view.sql   # View for decimal metrics
-│
-├── scripts/                      # UTILITY SCRIPTS
-│   ├── convert_to_gguf.py        # Convert model to GGUF format
-│   ├── create_ollama_model.py    # Create Ollama model
-│   └── cleanup.ps1               # Cleanup script
-│
-├── config/                       # CONFIGURATION
-│   └── .env.example              # Environment variables template
-│
-├── reports/                      # EVALUATION RESULTS
-│   └── evaluation_report_*.json  # Performance comparison reports
-│
-└── Supabase_csv/                 # DATA EXPORTS
-    └── *.csv                     # Database exports
+### 1. User Interaction Workflow
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant F as Frontend
+    participant B as Backend
+    participant O as Ollama
+    participant D as Database
+    
+    U->>F: Enter question
+    F->>B: POST /generate
+    B->>O: Generate response
+    O-->>B: AI response
+    B->>D: Store interaction
+    D-->>B: Record ID
+    B-->>F: Return response
+    F-->>U: Display answer
+    
+    Note over D: status_eval_first = 'created'
 ```
 
-### Component Responsibilities
+### 2. Evaluation Workflow
 
-| Component | Purpose | Key Files |
-|-----------|---------|-----------|
-| **app/** | API server and workers | `app.py`, `eval_first.py`, `eval_finetune.py` |
-| **src/data_generation/** | Create training data | `teacher.py`, `student.py`, `prepare_data.py` |
-| **src/training/** | Fine-tune models | `finetune.py` |
-| **src/evaluation/** | Assess quality | `update_metrics.py`, `evaluate_finetuned.py` |
-| **src/metrics/** | Scoring engine | `llm_eval.py` |
-| **src/database/** | Data persistence | `supabase_client.py` |
-| **docs/** | Documentation and media | PDFs, images, video |
-| **sql/** | Database schemas | SQL scripts |
-| **scripts/** | Utilities | Conversion and deployment tools |
+```mermaid
+sequenceDiagram
+    participant W as Worker 1
+    participant D as Database
+    participant M as Metrics Engine
+    
+    loop Every 5 seconds
+        W->>D: Query records (status='created')
+        D-->>W: Return records
+        
+        alt Records found
+            W->>M: Compute 8 metrics
+            M-->>W: Return scores
+            W->>D: Update metrics
+            Note over D: status_eval_first = 'done'
+        else No records
+            W->>W: Wait 5 seconds
+        end
+    end
+```
+
+### 3. Fine-tuning Workflow
+
+```mermaid
+flowchart TD
+    A[Worker 2 Starts] --> B{Check Record Count}
+    B -->|< 5000| C[Wait 60 seconds]
+    C --> B
+    B -->|≥ 5000| D[Prepare Training Data]
+    D --> E[Export to JSONL]
+    E --> F[Split Train/Val 90/10]
+    F --> G[Load Gemma Model]
+    G --> H[Apply LoRA Adapters]
+    H --> I[Train 3 Epochs]
+    I --> J[Save Checkpoints]
+    J --> K[Merge Adapters]
+    K --> L[Export to GGUF]
+    L --> M[Deploy to Ollama]
+    M --> N[Evaluate Fine-tuned Model]
+    N --> O[Update Database]
+    O --> P[Generate Report]
+    P --> Q[End]
+```
+
+### 4. Complete Self-Improvement Loop
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Collecting: User Interaction
+    Collecting --> Evaluating: Store in DB
+    Evaluating --> Collecting: Metrics Computed
+    Collecting --> Training: Threshold Reached
+    Training --> Deploying: Fine-tuning Complete
+    Deploying --> FinalEval: Model Deployed
+    FinalEval --> Improved: Evaluation Done
+    Improved --> Collecting: Continue Learning
+```
+
+### 5. Data Flow Pipeline
+
+```mermaid
+graph TD
+    A[User Question] --> B[Gemma 1B Response]
+    B --> C[Database Storage]
+    C --> D[Base Metrics Computation]
+    D --> E{5000 Records?}
+    E -->|No| C
+    E -->|Yes| F[Export Training Data]
+    F --> G[LoRA Fine-tuning]
+    G --> H[Model Merging]
+    H --> I[GGUF Conversion]
+    I --> J[Ollama Deployment]
+    J --> K[Final Evaluation]
+    K --> L[Update Metrics]
+    L --> M[Comparison Report]
+    M --> N[Model Improvement: +38%]
+```
+
+### 6. CI/CD Workflow (GitHub Actions - Example)
+
+```mermaid
+flowchart LR
+    A[Push to main] --> B[Run Tests]
+    B --> C{Tests Pass?}
+    C -->|No| D[Notify Team]
+    C -->|Yes| E[Build Docker Image]
+    E --> F[Push to Registry]
+    F --> G[Deploy to Server]
+    G --> H[Health Check]
+    H --> I{Healthy?}
+    I -->|No| J[Rollback]
+    I -->|Yes| K[Complete]
+```
 
 ---
 
-## Installation Process
+## 🚀 Installation & Setup
 
 ### Prerequisites
 
-Before you begin, ensure you have the following installed:
+Before starting, ensure you have:
 
-| Requirement | Version | Purpose |
-|------------|---------|---------|
-| **Python** | 3.10 or higher | Core runtime |
-| **NVIDIA GPU** | 8GB+ VRAM | Fine-tuning (RTX 4060 or better recommended) |
-| **System RAM** | 16GB or more | Model loading |
-| **Ollama** | Latest | Local LLM inference |
-| **Supabase Account** | Free tier | Cloud database |
-| **Git** | Latest | Clone repository |
+| Requirement | Minimum | Recommended | Check Command |
+|------------|---------|-------------|---------------|
+| **Python** | 3.10 | 3.11+ | `python --version` |
+| **Node.js** | 18 | 20 LTS | `node --version` |
+| **npm** | 9 | 10+ | `npm --version` |
+| **GPU** | 8GB VRAM | 12GB+ VRAM | `nvidia-smi` |
+| **RAM** | 16GB | 32GB | - |
+| **Disk** | 50GB free | 100GB+ free | - |
+| **Git** | 2.30+ | Latest | `git --version` |
 
 ---
 
-### Step 1: Clone the Repository
+### Step 1: Clone Repository with Submodules
 
 ```bash
-git clone https://github.com/Self-eval-llm/Intune-Backend.git
-cd Intune-Backend
+# Clone the main repository with all submodules
+git clone --recursive https://github.com/RK0297/Intune.git
+cd Intune
+
+# If you already cloned without --recursive, initialize submodules:
+git submodule update --init --recursive
+```
+
+**Verify submodules:**
+
+```bash
+# Check submodule status
+git submodule status
+
+# Expected output:
+# <commit-hash> Intune-Frontend (heads/main)
+# <commit-hash> Intune_Backend (heads/main)
+# <commit-hash> Intune_OpenAI_Backend (heads/main)
 ```
 
 ---
 
-### Step 2: Set Up Python Environment
-
-**Using Virtual Environment (Recommended):**
+### Step 2: Set Up Backend (Intune_Backend)
 
 ```bash
+cd Intune_Backend
+
 # Create virtual environment
 python -m venv .venv
 
 # Activate virtual environment
-# On Windows PowerShell:
+# Windows PowerShell:
 .\.venv\Scripts\Activate.ps1
-
-# On Windows Command Prompt:
-.\.venv\Scripts\activate.bat
-
-# On Linux/Mac:
+# Linux/Mac:
 source .venv/bin/activate
 
 # Install dependencies
-pip install -r requirements_finetune.txt
-```
-
-**Using Conda (Alternative):**
-
-```bash
-# Create conda environment
-conda create -n llm-framework python=3.10
-
-# Activate environment
-conda activate llm-framework
-
-# Install dependencies
+pip install --upgrade pip
 pip install -r requirements_finetune.txt
 ```
 
 ---
 
-### Step 3: Configure Environment Variables
+### Step 3: Set Up Frontend (Intune-Frontend)
 
 ```bash
-# Copy the environment template
-cp config/.env.example .env
+cd ../Intune-Frontend
 
-# Edit .env file with your credentials
-# On Windows: notepad .env
-# On Linux/Mac: nano .env
+# Install Node dependencies
+npm install
+
+# Verify installation
+npm list --depth=0
 ```
-
-**Add your Supabase credentials to `.env`:**
-
-```env
-# Supabase Configuration
-SUPABASE_URL=https://your-project-id.supabase.co
-SUPABASE_KEY=your-anon-or-service-key
-
-# Optional: Model Configuration
-DEFAULT_MODEL=gemma3:1b
-TEACHER_MODEL=gpt-oss:20b
-```
-
-**How to get Supabase credentials:**
-1. Go to [supabase.com](https://supabase.com) and create a free account
-2. Create a new project
-3. Navigate to **Settings** → **API**
-4. Copy the **Project URL** and **anon/public key**
 
 ---
 
-### Step 4: Set Up Database
+### Step 4: Install Ollama
 
-**Run SQL scripts in Supabase SQL Editor in the following order:**
+**Windows:**
 
-1. Open Supabase Dashboard → SQL Editor
-2. Execute `sql/supabase_setup.sql` - Creates main table structure
-3. Execute `sql/supabase_add_metrics.sql` - Adds metric columns
-4. Execute `sql/add_tuned_columns.sql` - Adds fine-tuned metric columns
-5. (Optional) Execute `sql/create_decimal_view.sql` - Creates decimal view for easier querying
-
-**Database Schema Created:**
-
-The `intune_db` table includes:
-- `id` - Primary key
-- `created_at` - Timestamp
-- `input` - User question
-- `actual_output` - Base model response
-- `expected_output` - Reference answer
-- `context` - Background information (JSONB)
-- `status_eval_first` - Base evaluation status
-- `status_eval_final` - Fine-tuning evaluation status
-- 8 base metric columns (INTEGER, multiply by 10000)
-- 8 fine-tuned metric columns (INTEGER, multiply by 10000)
-
----
-
-### Step 5: Set Up Ollama
-
-**Install Ollama:**
-
-```bash
-# Windows (using winget):
+```powershell
+# Using winget
 winget install Ollama.Ollama
 
-# Or download from https://ollama.ai
+# Or download from https://ollama.ai/download
+```
 
-# Start Ollama service
+**Linux:**
+
+```bash
+curl -fsSL https://ollama.ai/install.sh | sh
+```
+
+**macOS:**
+
+```bash
+brew install ollama
+```
+
+**Start Ollama service:**
+
+```bash
 ollama serve
 ```
 
-**Pull Required Models:**
-
-Open a new terminal window and run:
+**Pull required models:**
 
 ```bash
-# Pull base model (Gemma 1B - approximately 1.5GB)
+# Pull base model (1.5GB)
 ollama pull gemma3:1b
 
-# Pull teacher model (GPT-OSS 20B - approximately 20GB)
-# Optional, only needed for data generation
+# Pull teacher model (20GB - optional, for data generation)
 ollama pull gpt-oss:20b
 
-# Verify installation
+# Verify
 ollama list
+```
+
+---
+
+### Step 5: Set Up Database (Supabase)
+
+**5.1 Create Supabase Project:**
+
+1. Go to [supabase.com](https://supabase.com)
+2. Sign up / Log in
+3. Click "New Project"
+4. Fill in project details
+5. Wait for provisioning (~2 minutes)
+
+**5.2 Get API Credentials:**
+
+1. Navigate to **Settings** → **API**
+2. Copy **Project URL**
+3. Copy **anon/public key**
+
+**5.3 Run SQL Scripts:**
+
+Open **SQL Editor** in Supabase Dashboard and execute in order:
+
+```sql
+-- 1. Create main table
+-- Run: Intune_Backend/sql/supabase_setup.sql
+
+-- 2. Add metric columns
+-- Run: Intune_Backend/sql/supabase_add_metrics.sql
+
+-- 3. Add fine-tuned columns
+-- Run: Intune_Backend/sql/add_tuned_columns.sql
+
+-- 4. (Optional) Create decimal view
+-- Run: Intune_Backend/sql/create_decimal_view.sql
+```
+
+---
+
+## ⚙️ Configuration
+
+### Backend Configuration (.env)
+
+Create `.env` file in `Intune_Backend/`:
+
+```bash
+cd Intune_Backend
+cp config/.env.example .env
+```
+
+**Edit `.env`:**
+
+```env
+# ======================
+# SUPABASE CONFIGURATION
+# ======================
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_KEY=your-anon-or-service-key
+
+# ======================
+# MODEL CONFIGURATION
+# ======================
+DEFAULT_MODEL=gemma3:1b
+TEACHER_MODEL=gpt-oss:20b
+FINE_TUNED_MODEL=gemma-finetuned
+
+# ======================
+# TRAINING CONFIGURATION
+# ======================
+FINE_TUNE_THRESHOLD=5000
+BATCH_SIZE=4
+LEARNING_RATE=2e-4
+NUM_EPOCHS=3
+MAX_SEQ_LENGTH=2048
+
+# ======================
+# WORKER CONFIGURATION
+# ======================
+EVAL_FIRST_POLL_INTERVAL=5
+EVAL_FINETUNE_CHECK_INTERVAL=60
+
+# ======================
+# API CONFIGURATION
+# ======================
+API_HOST=0.0.0.0
+API_PORT=8000
+CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+
+# ======================
+# LOGGING
+# ======================
+LOG_LEVEL=INFO
+```
+
+### Frontend Configuration
+
+Create `.env` file in `Intune-Frontend/`:
+
+```env
+# API Endpoint
+VITE_API_URL=http://localhost:8000
+
+# Environment
+VITE_ENV=development
+```
+
+### Environment Variables Reference
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `SUPABASE_URL` | - | Supabase project URL (required) |
+| `SUPABASE_KEY` | - | Supabase API key (required) |
+| `DEFAULT_MODEL` | `gemma3:1b` | Base model name |
+| `FINE_TUNE_THRESHOLD` | `5000` | Records needed to trigger training |
+| `EVAL_FIRST_POLL_INTERVAL` | `5` | Seconds between evaluation checks |
+| `API_PORT` | `8000` | Backend server port |
+| `VITE_API_URL` | `http://localhost:8000` | Backend URL for frontend |
+
+---
+
+## 🎮 Usage Instructions
+
+### Running the Complete System
+
+The application requires **4 separate terminal windows** running simultaneously.
+
+---
+
+#### Terminal 1: Backend API Server
+
+```bash
+cd Intune_Backend
+.\.venv\Scripts\Activate.ps1  # Windows
+# source .venv/bin/activate    # Linux/Mac
+
+python -m uvicorn app.app:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 **Expected Output:**
 ```
-NAME              ID              SIZE      MODIFIED
-gemma3:1b         abc123def       1.5 GB    2 minutes ago
-gpt-oss:20b       def456ghi       20 GB     5 minutes ago
-```
-
----
-
-### Step 6: Verify Installation
-
-**Test database connection:**
-
-```bash
-python -c "from src.database.supabase_client import get_supabase_client; print('Database connected!' if get_supabase_client() else 'Connection failed')"
-```
-
-**Test Ollama connection:**
-
-```bash
-curl http://localhost:11434/api/tags
-```
-
-If successful, you should see a JSON response with a list of available models.
-
----
-
-## Execution Guide
-
-The framework requires **3 separate processes** running simultaneously. Each process should run in its own terminal window.
-
-### Terminal 1: API Server (Main Application)
-
-```bash
-# Activate virtual environment
-.\.venv\Scripts\Activate.ps1
-
-# Start FastAPI server
-python -m uvicorn app.app:app --host 0.0.0.0 --port 8000 --reload
-```
-
-**What it does:**
-- Serves REST API endpoints
-- Handles `/generate` requests from frontend
-- Manages database operations
-- Provides health check endpoint
-
-**Console Output:**
-```
-INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [12345] using WatchFiles
-INFO:     Started server process [12346]
-INFO:     Waiting for application startup.
+INFO:     Uvicorn running on http://0.0.0.0:8000
 INFO:     Application startup complete.
 ```
 
-**Status:** API is ready when you see "Application startup complete"
-
-**API will be available at:** `http://localhost:8000`
+**Endpoints Available:**
+- API Root: `http://localhost:8000`
+- Swagger Docs: `http://localhost:8000/docs`
+- Health Check: `http://localhost:8000/health`
 
 ---
 
-### Terminal 2: First Evaluation Worker
+#### Terminal 2: Evaluation Worker
 
 ```bash
-# Activate virtual environment
-.\.venv\Scripts\Activate.ps1
+cd Intune_Backend
+.\.venv\Scripts\Activate.ps1  # Windows
+# source .venv/bin/activate    # Linux/Mac
 
-# Start first evaluation worker
 python app\eval_first.py
 ```
 
-**What it does:**
-- Polls Supabase for records with `status_eval_first='created'`
-- Computes 8 evaluation metrics for base model outputs
-- Updates database with computed scores
-- Marks records as `status_eval_first='done'`
-
-**Console Output:**
+**Expected Output:**
 ```
 INFO: Starting First Evaluation Worker...
 INFO: Polling interval: 5 seconds
 INFO: Found 3 records to evaluate
 INFO: Evaluating record 123
 INFO: Updated record 123 (Answer Relevancy: 0.7532)
-INFO: Batch complete. Processed 3 records in 2.1s
 ```
-
-**Status:** Worker is active and polling
 
 ---
 
-### Terminal 3: Fine-tuning Worker
+#### Terminal 3: Fine-tuning Worker
 
 ```bash
-# Activate virtual environment
-.\.venv\Scripts\Activate.ps1
+cd Intune_Backend
+.\.venv\Scripts\Activate.ps1  # Windows
+# source .venv/bin/activate    # Linux/Mac
 
-# Start fine-tuning worker
 python app\eval_finetune.py
 ```
 
-**What it does:**
-- Monitors record count in database
-- Triggers fine-tuning when threshold reached (default: 5000 records)
-- Trains LoRA adapters on collected data
-- Evaluates fine-tuned model and updates `*_tuned` metrics
-- Generates comparison reports
-
-**Console Output (Initial):**
+**Expected Output:**
 ```
 INFO: Starting Fine-tuning Worker...
 INFO: Checking conditions every 60 seconds
@@ -563,28 +764,41 @@ INFO: Records collected: 47 / 5000 (0.94%)
 INFO: Threshold not reached. Waiting...
 ```
 
-**Console Output (When Triggered):**
-```
-INFO: Conditions met! Starting fine-tuning process...
-INFO: Preparing training data...
-INFO: Created train_dataset.jsonl (4500 examples)
-INFO: Created val_dataset.jsonl (500 examples)
-INFO: Starting fine-tuning with LoRA...
-INFO: Epoch 1/3 - Loss: 0.8234
-INFO: Epoch 2/3 - Loss: 0.6891
-INFO: Epoch 3/3 - Loss: 0.5743
-INFO: Fine-tuning completed successfully
-INFO: Starting final evaluation...
-INFO: Processed 100 records - Avg improvement: +12.3%
+---
+
+#### Terminal 4: Frontend Server
+
+```bash
+cd Intune-Frontend
+
+npm run dev
 ```
 
-**Status:** Worker is monitoring; fine-tuning will trigger automatically
+**Expected Output:**
+```
+VITE v5.0.0  ready in 500 ms
+
+➜  Local:   http://localhost:5173/
+➜  Network: http://192.168.1.100:5173/
+```
+
+**Access the app:** Open `http://localhost:5173` in your browser
 
 ---
 
-### Testing the System
+### Using the Web Interface
 
-**Method 1: Using curl (Command Line)**
+1. **Open Browser:** Navigate to `http://localhost:5173`
+2. **Enter Question:** Type your question in the chat input
+3. **View Response:** AI-generated answer appears in real-time
+4. **Check Metrics:** View evaluation scores (if implemented in UI)
+5. **Continue Chatting:** System learns from each interaction
+
+---
+
+### Using the API Directly
+
+#### Method 1: curl (Command Line)
 
 ```bash
 curl -X POST http://localhost:8000/generate \
@@ -592,11 +806,11 @@ curl -X POST http://localhost:8000/generate \
   -d '{"prompt": "What is machine learning?"}'
 ```
 
-**Method 2: Using PowerShell**
+#### Method 2: PowerShell
 
 ```powershell
 $body = @{
-    prompt = "What is artificial intelligence?"
+    prompt = "Explain neural networks"
 } | ConvertTo-Json
 
 Invoke-RestMethod -Uri http://localhost:8000/generate `
@@ -605,14 +819,14 @@ Invoke-RestMethod -Uri http://localhost:8000/generate `
   -ContentType "application/json"
 ```
 
-**Method 3: Using Python Script**
+#### Method 3: Python Script
 
 ```python
 import requests
 
 response = requests.post(
     "http://localhost:8000/generate",
-    json={"prompt": "Explain neural networks"}
+    json={"prompt": "What is deep learning?"}
 )
 
 print(response.json())
@@ -622,155 +836,188 @@ print(response.json())
 
 ```json
 {
-  "response": "Machine learning is a subset of artificial intelligence...",
+  "response": "Deep learning is a subset of machine learning...",
   "model": "gemma3:1b",
-  "timestamp": "2025-11-16T14:30:45Z"
+  "timestamp": "2025-11-16T15:30:45Z",
+  "record_id": 12345
 }
 ```
 
 ---
 
-### Quick Start Workflow (Small Test)
+## 💻 Code Examples
 
-For testing with 10 examples instead of 5000:
+### Example 1: Making API Requests
 
-```bash
-# Step 1: Generate 10 training examples
-python src\data_generation\teacher.py --n 10 --mode continuous
+```python
+# src/example_api_client.py
+import requests
+from typing import Dict, Any
 
-# Step 2: Generate base model outputs
-python src\data_generation\student.py
+class IntuneClient:
+    def __init__(self, base_url: str = "http://localhost:8000"):
+        self.base_url = base_url
+    
+    def generate_response(self, prompt: str) -> Dict[str, Any]:
+        """Generate a response from the LLM"""
+        response = requests.post(
+            f"{self.base_url}/generate",
+            json={"prompt": prompt},
+            timeout=30
+        )
+        response.raise_for_status()
+        return response.json()
+    
+    def health_check(self) -> Dict[str, Any]:
+        """Check API health"""
+        response = requests.get(f"{self.base_url}/health")
+        return response.json()
 
-# Step 3: Compute metrics
-python src\evaluation\update_metrics.py
-
-# Step 4: Prepare training data
-python src\data_generation\prepare_data.py
-
-# Step 5: Fine-tune (edit finetune.py to use small dataset)
-python src\training\finetune.py
-
-# Step 6: Evaluate fine-tuned model
-python src\evaluation\evaluate_finetuned.py
+# Usage
+client = IntuneClient()
+result = client.generate_response("What is AI?")
+print(f"Response: {result['response']}")
+print(f"Model: {result['model']}")
 ```
 
-**Time Estimate:** Approximately 30 minutes for complete cycle with 10 examples
+### Example 2: Computing Metrics Programmatically
+
+```python
+# src/example_metrics.py
+from src.metrics.llm_eval import LLMEvaluator
+
+# Initialize evaluator
+evaluator = LLMEvaluator()
+
+# Prepare evaluation data
+question = "What is photosynthesis?"
+answer = "Photosynthesis is the process by which plants convert sunlight into energy."
+context = ["Plants use chlorophyll to absorb light", "CO2 and water are inputs"]
+reference = "Photosynthesis converts light energy into chemical energy in plants."
+
+# Compute metrics
+metrics = evaluator.evaluate(
+    question=question,
+    answer=answer,
+    context=context,
+    expected_output=reference
+)
+
+# Display results
+print(f"Answer Relevancy: {metrics['answer_relevancy']:.4f}")
+print(f"Faithfulness: {metrics['faithfulness']:.4f}")
+print(f"Toxicity: {metrics['toxicity']:.4f}")
+print(f"Overall Score: {metrics['overall_score']:.4f}")
+```
+
+### Example 3: Database Operations
+
+```python
+# src/example_database.py
+from src.database.supabase_client import get_supabase_client
+
+# Get database client
+supabase = get_supabase_client()
+
+# Insert new record
+data = {
+    "input": "What is quantum computing?",
+    "actual_output": "Quantum computing uses quantum mechanics...",
+    "expected_output": "Quantum computing leverages superposition...",
+    "context": ["Quantum mechanics", "Superposition", "Entanglement"],
+    "status_eval_first": "created"
+}
+
+result = supabase.table("intune_db").insert(data).execute()
+print(f"Inserted record ID: {result.data[0]['id']}")
+
+# Query records
+records = supabase.table("intune_db")\
+    .select("*")\
+    .eq("status_eval_first", "created")\
+    .limit(10)\
+    .execute()
+
+print(f"Found {len(records.data)} records pending evaluation")
+```
+
+### Example 4: Fine-tuning Entry Point
+
+```python
+# src/example_finetune.py
+from src.training.finetune import fine_tune_model
+from src.data_generation.prepare_data import prepare_training_data
+
+# Step 1: Prepare data
+train_file, val_file = prepare_training_data(
+    output_dir="./training_data",
+    train_split=0.9
+)
+
+print(f"Training data: {train_file}")
+print(f"Validation data: {val_file}")
+
+# Step 2: Fine-tune
+fine_tune_model(
+    model_name="unsloth/gemma-1b",
+    train_file=train_file,
+    val_file=val_file,
+    output_dir="./models/gemma-finetuned",
+    epochs=3,
+    batch_size=4,
+    learning_rate=2e-4
+)
+
+print("Fine-tuning complete!")
+```
 
 ---
 
-### Stopping the System
+## 📚 API Documentation
 
-**Graceful Shutdown:**
-
-In each terminal window, press:
-```
-Ctrl + C
-```
-
-Wait for "Shutting down gracefully..." message
-
-**Force Stop (if needed):**
-
-```bash
-# Windows PowerShell
-Get-Process python | Stop-Process
-
-# Linux/Mac
-pkill python
-```
-
----
-
-## Evaluation Metrics
-
-The system uses 8 distinct metrics to evaluate model quality:
-
-### Positive Metrics (Higher = Better)
-
-**1. Answer Relevancy (0-1)**
-- Measures how relevant the answer is to the question
-- Formula: `cosine_similarity(question_tokens, answer_tokens)`
-
-**2. Contextual Precision (0-1)**
-- Measures how much of the answer is supported by the context
-- Formula: `|answer ∩ context| / |answer|`
-
-**3. Contextual Recall (0-1)**
-- Measures how much of the context is covered in the answer
-- Formula: `|answer ∩ context| / |context|`
-
-**4. Contextual Relevancy (0-1)**
-- Measures semantic similarity between context and answer
-- Formula: `cosine_similarity(context_tokens, answer_tokens)`
-
-**5. Faithfulness (0-1)**
-- Measures alignment with reference answer and context
-- Formula: `0.6 × cos(answer, reference) + 0.4 × cos(answer, context)`
-
-### Negative Metrics (Lower = Better)
-
-**6. Toxicity (0-1)**
-- Measures presence of harmful or toxic language
-- Formula: `toxic_words / total_words`
-- Detection: Lexicon-based (offline, no API calls)
-
-**7. Hallucination Rate (0-1)**
-- Measures information not supported by context
-- Formula: `1 - contextual_precision`
-
-### Aggregate Metric
-
-**8. Overall Score (0-1)**
-- Balanced combination of all metrics
-- Formula: `mean(positive_metrics) × (1 - mean(negative_metrics))`
-
-### Example Comparison
-
-**Before Fine-tuning (Base Model):**
-
-| Metric | Score | Status |
-|--------|-------|--------|
-| Answer Relevancy | 0.6500 | Moderate |
-| Contextual Precision | 0.5815 | Moderate |
-| Contextual Recall | 0.6234 | Moderate |
-| Contextual Relevancy | 0.5892 | Moderate |
-| Faithfulness | 0.5815 | Moderate |
-| Toxicity | 0.0234 | Good |
-| Hallucination Rate | 0.4185 | Poor |
-| **Overall Score** | **0.4721** | **Moderate** |
-
-**After Fine-tuning:**
-
-| Metric | Score | Improvement | Status |
-|--------|-------|-------------|--------|
-| Answer Relevancy | 0.7850 | +20.8% | Good |
-| Contextual Precision | 0.7623 | +31.1% | Good |
-| Contextual Recall | 0.7456 | +19.6% | Good |
-| Contextual Relevancy | 0.7234 | +22.8% | Good |
-| Faithfulness | 0.7067 | +21.5% | Good |
-| Toxicity | 0.0156 | -33.3% | Excellent |
-| Hallucination Rate | 0.2377 | -43.2% | Much Better |
-| **Overall Score** | **0.6534** | **+38.4%** | **Good** |
-
----
-
-## API Documentation
-
-### Main Endpoints
+### Endpoints
 
 #### `GET /`
-Root endpoint providing API information
 
-#### `GET /health`
-Health check endpoint to monitor service status
+**Description:** Root endpoint providing API information
 
-#### `POST /generate`
-Generate a response from the model
-
-**Request:**
+**Response:**
 ```json
 {
-  "prompt": "What is machine learning?"
+  "message": "Intune API - Self-Improving LLM Framework",
+  "version": "1.0.0",
+  "endpoints": ["/generate", "/health"]
+}
+```
+
+---
+
+#### `GET /health`
+
+**Description:** Health check endpoint
+
+**Response:**
+```json
+{
+  "status": "healthy",
+  "database": "connected",
+  "ollama": "running",
+  "timestamp": "2025-11-16T15:30:45Z"
+}
+```
+
+---
+
+#### `POST /generate`
+
+**Description:** Generate a response from the LLM
+
+**Request Body:**
+```json
+{
+  "prompt": "What is machine learning?",
+  "model": "gemma3:1b",  // Optional
+  "max_tokens": 500      // Optional
 }
 ```
 
@@ -778,116 +1025,578 @@ Generate a response from the model
 ```json
 {
   "response": "Machine learning is a method of data analysis...",
-  "model": "gemma3:1b"
+  "model": "gemma3:1b",
+  "timestamp": "2025-11-16T15:30:45Z",
+  "record_id": 12345,
+  "tokens_used": 87
 }
 ```
 
-### Interactive Documentation
-
-- **Swagger UI:** `http://localhost:8000/docs`
-- **ReDoc:** `http://localhost:8000/redoc`
-- **Detailed API docs:** See [app/README.md](app/README.md)
-
----
-
-## Technology Stack
-
-| Component | Technology |
-|-----------|-----------|
-| **Backend Framework** | FastAPI |
-| **Database** | Supabase (PostgreSQL) |
-| **LLM Inference** | Ollama |
-| **Base Model** | Gemma 1B |
-| **Teacher Model** | GPT-OSS 20B |
-| **Fine-tuning Library** | Unsloth |
-| **Fine-tuning Method** | LoRA (Low-Rank Adaptation) |
-| **Metrics Engine** | Custom implementation |
-| **Programming Language** | Python 3.10+ |
+**Status Codes:**
+- `200`: Success
+- `400`: Invalid request body
+- `500`: Server error
+- `503`: Ollama service unavailable
 
 ---
 
-## Documentation
+### Interactive API Documentation
 
-### Available Documentation Files
+**Swagger UI:** `http://localhost:8000/docs`
 
-- **[Project Report (PDF)](docs/AI_report.pdf)** - Comprehensive technical documentation covering methodology, implementation, and results
-- **[Project Presentation (PPTX)](docs/AI_PPT.pptx)** - Visual overview of architecture, workflow, and key features
-- **[Results Analysis (PDF)](docs/result.pdf)** - Detailed evaluation results and performance metrics
+- Interactive API testing
+- Request/response schemas
+- Try-it-out functionality
 
-### Screenshots and Diagrams
+**ReDoc:** `http://localhost:8000/redoc`
 
-- **Landing Page:** [docs/intune_landingpage.png](docs/intune_landingpage.png)
-- **Full Workflow Diagram:** [docs/Full_workflow.png](docs/Full_workflow.png)
-- **Basic Workflow:** [docs/basic_workflow_figma.png](docs/basic_workflow_figma.png)
-- **Database Schema:** [docs/db_schema.png](docs/db_schema.png)
+- Clean, readable documentation
+- Code examples in multiple languages
 
 ---
 
-## Troubleshooting
+## 🐳 Deployment
 
-### Common Issues
+### Docker Deployment (Recommended)
 
-**1. Ollama Connection Failed**
+**Coming Soon** - Docker Compose configuration for one-command deployment
+
+```yaml
+# docker-compose.yml (Future)
+version: '3.8'
+
+services:
+  backend:
+    build: ./Intune_Backend
+    ports:
+      - "8000:8000"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+    
+  frontend:
+    build: ./Intune-Frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+  
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    
+volumes:
+  ollama-data:
+```
+
+---
+
+### Local Production Deployment
+
+**1. Build Frontend:**
+
 ```bash
-# Start Ollama service
+cd Intune-Frontend
+npm run build
+```
+
+**2. Serve Frontend:**
+
+```bash
+npm install -g serve
+serve -s dist -l 3000
+```
+
+**3. Run Backend with Gunicorn:**
+
+```bash
+cd Intune_Backend
+gunicorn app.app:app \
+  --workers 4 \
+  --worker-class uvicorn.workers.UvicornWorker \
+  --bind 0.0.0.0:8000
+```
+
+**4. Set up Process Manager (PM2/systemd):**
+
+```bash
+# Using PM2
+pm2 start app.app:app --name intune-backend --interpreter python
+pm2 start "npm run dev" --name intune-frontend
+pm2 save
+pm2 startup
+```
+
+---
+
+### Cloud Deployment
+
+#### Option 1: AWS EC2
+
+1. Launch EC2 instance (g4dn.xlarge for GPU)
+2. Install dependencies
+3. Configure security groups (ports 8000, 5173, 11434)
+4. Set up Nginx reverse proxy
+5. Use systemd for process management
+
+#### Option 2: Google Cloud Platform
+
+1. Create Compute Engine instance with GPU
+2. Follow local installation steps
+3. Configure firewall rules
+4. Use Cloud Load Balancer
+
+#### Option 3: Vercel (Frontend only)
+
+```bash
+cd Intune-Frontend
+vercel deploy
+```
+
+---
+
+## 🧪 Testing
+
+### Running Tests
+
+**Backend Tests:**
+
+```bash
+cd Intune_Backend
+pytest tests/ -v --cov=src
+```
+
+**Frontend Tests:**
+
+```bash
+cd Intune-Frontend
+npm run test
+```
+
+---
+
+### Manual Testing Checklist
+
+- [ ] API server starts without errors
+- [ ] Frontend loads at localhost:5173
+- [ ] Can send query and receive response
+- [ ] Response is stored in database
+- [ ] eval_first worker computes metrics
+- [ ] Metrics appear in database
+- [ ] Fine-tuning triggers at threshold
+- [ ] Fine-tuned model deploys successfully
+- [ ] Final evaluation completes
+- [ ] Comparison report generated
+
+---
+
+### Load Testing
+
+```bash
+# Install Apache Bench
+sudo apt install apache2-utils
+
+# Test API endpoint
+ab -n 1000 -c 10 -p query.json -T application/json \
+  http://localhost:8000/generate
+```
+
+---
+
+## 🔧 Troubleshooting
+
+### Common Issues and Solutions
+
+#### Issue 1: Ollama Connection Failed
+
+**Symptoms:**
+```
+Error: Could not connect to Ollama at http://localhost:11434
+```
+
+**Solutions:**
+
+```bash
+# Check if Ollama is running
+curl http://localhost:11434/api/tags
+
+# If not running, start it
 ollama serve
 
-# Check if running
-curl http://localhost:11434/api/tags
+# Verify models are installed
+ollama list
+
+# If models missing, pull them
+ollama pull gemma3:1b
 ```
 
-**2. Model Not Found**
+---
+
+#### Issue 2: Supabase Connection Failed
+
+**Symptoms:**
+```
+Error: Invalid API key or URL
+```
+
+**Solutions:**
+
+1. Verify `.env` file exists in `Intune_Backend/`
+2. Check credentials in Supabase Dashboard
+3. Test connection:
+
+```python
+python -c "from src.database.supabase_client import get_supabase_client; print(get_supabase_client())"
+```
+
+4. Ensure firewall allows outbound HTTPS to Supabase
+
+---
+
+#### Issue 3: Worker Not Processing Records
+
+**Symptoms:**
+```
+INFO: Found 0 records to evaluate
+```
+
+**Solutions:**
+
+1. Check database has records:
+
 ```bash
-# Create model from Modelfile
-ollama create gemma-finetuned -f Modelfile
+# Query Supabase
 ```
 
-**3. Supabase Connection Failed**
-- Verify credentials in `.env` file
-- Check network connectivity
-- Ensure table `intune_db` exists
+2. Verify status flags:
 
-**4. Workers Not Processing**
-- Check database has records with appropriate status flags
-- Verify fine-tuned model exists at `models/gemma-finetuned-merged/`
-- Check worker logs for specific errors
+```sql
+SELECT status_eval_first, COUNT(*) 
+FROM intune_db 
+GROUP BY status_eval_first;
+```
 
----
+3. Manually set status:
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Acknowledgments
-
-- **Gemma** by Google for the base language model
-- **Ollama** for local LLM inference infrastructure
-- **Unsloth** for efficient fine-tuning framework
-- **Supabase** for database and backend services
+```sql
+UPDATE intune_db 
+SET status_eval_first = 'created' 
+WHERE id = 123;
+```
 
 ---
 
-## Contact and Support
+#### Issue 4: GPU Out of Memory
 
-For questions, issues, or contributions:
+**Symptoms:**
+```
+torch.cuda.OutOfMemoryError: CUDA out of memory
+```
 
-- **GitHub Issues:** [Report a bug](https://github.com/Self-eval-llm/Intune-Backend/issues)
-- **GitHub Discussions:** [Ask questions](https://github.com/Self-eval-llm/Intune-Backend/discussions)
+**Solutions:**
+
+1. Reduce batch size in `.env`:
+
+```env
+BATCH_SIZE=2  # Reduce from 4
+```
+
+2. Reduce max sequence length:
+
+```env
+MAX_SEQ_LENGTH=1024  # Reduce from 2048
+```
+
+3. Clear GPU cache:
+
+```python
+import torch
+torch.cuda.empty_cache()
+```
 
 ---
 
-## Project Status
+#### Issue 5: Fine-tuning Not Triggering
 
-**Active Development** - The project is actively maintained and continuously improving.
+**Symptoms:**
+```
+INFO: Records collected: 4999 / 5000 (99.98%)
+```
+
+**Solutions:**
+
+1. Check exact record count:
+
+```sql
+SELECT COUNT(*) FROM intune_db WHERE status_eval_first = 'done';
+```
+
+2. Lower threshold temporarily:
+
+```env
+FINE_TUNE_THRESHOLD=10  # For testing
+```
+
+3. Manually trigger (for testing):
+
+```bash
+python src/training/finetune.py
+```
+
+---
+
+#### Issue 6: Frontend Cannot Connect to Backend
+
+**Symptoms:**
+```
+Network Error: Failed to fetch
+```
+
+**Solutions:**
+
+1. Verify backend is running on port 8000
+2. Check CORS configuration in `app/app.py`:
+
+```python
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+3. Verify `.env` in frontend:
+
+```env
+VITE_API_URL=http://localhost:8000
+```
+
+---
+
+### Debug Mode
+
+**Enable detailed logging:**
+
+```env
+LOG_LEVEL=DEBUG
+```
+
+**View logs:**
+
+```bash
+# Backend logs
+tail -f logs/app.log
+
+# Worker logs
+tail -f logs/eval_first.log
+tail -f logs/eval_finetune.log
+```
+
+---
+
+### Getting Help
+
+If you're still experiencing issues:
+
+1. **Check existing issues:** [GitHub Issues](https://github.com/RK0297/Intune/issues)
+2. **Create new issue:** Include logs, system info, and steps to reproduce
+3. **Join discussions:** [GitHub Discussions](https://github.com/RK0297/Intune/discussions)
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions from the community!
+
+### How to Contribute
+
+1. **Fork the repository**
+
+```bash
+# Click "Fork" on GitHub
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/Intune.git
+```
+
+2. **Create a feature branch**
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+3. **Make your changes**
+
+- Follow existing code style
+- Add tests for new features
+- Update documentation
+
+4. **Commit your changes**
+
+```bash
+git add .
+git commit -m "feat: add your feature description"
+```
+
+**Commit Message Convention:**
+
+- `feat:` New feature
+- `fix:` Bug fix
+- `docs:` Documentation changes
+- `style:` Code style changes (formatting)
+- `refactor:` Code refactoring
+- `test:` Adding tests
+- `chore:` Maintenance tasks
+
+5. **Push to your fork**
+
+```bash
+git push origin feature/your-feature-name
+```
+
+6. **Create Pull Request**
+
+- Go to original repository
+- Click "New Pull Request"
+- Select your branch
+- Fill in PR template
+
+---
+
+### Development Guidelines
+
+**Code Style:**
+
+- **Python:** Follow PEP 8, use Black formatter
+- **TypeScript:** Follow Airbnb style guide, use ESLint/Prettier
+- **SQL:** Use uppercase for keywords
+
+**Testing:**
+
+- Write unit tests for new functions
+- Maintain >80% code coverage
+- Test edge cases
+
+**Documentation:**
+
+- Update README for new features
+- Add docstrings to functions
+- Include code examples
+
+---
+
+### Areas We Need Help
+
+- 🐛 Bug fixes
+- ✨ New evaluation metrics
+- 🎨 UI/UX improvements
+- 📝 Documentation improvements
+- 🌐 Internationalization
+- 🧪 Test coverage
+- 🚀 Performance optimizations
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+```
+MIT License
+
+Copyright (c) 2025 Radhakrishna Bharuka, Abhang Pawar, Nilesh Dwivedi, Rushikesh Masalkar
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## 🙏 Acknowledgments
+
+### Technologies
+
+- **[Gemma](https://ai.google.dev/gemma)** by Google - Base language model
+- **[Ollama](https://ollama.ai/)** - Local LLM inference infrastructure
+- **[Unsloth](https://github.com/unslothai/unsloth)** - 2x faster fine-tuning library
+- **[FastAPI](https://fastapi.tiangolo.com/)** - Modern Python web framework
+- **[React](https://reactjs.org/)** - Frontend UI library
+- **[Supabase](https://supabase.com/)** - Open-source Firebase alternative
+
+### Inspiration
+
+- Research papers on self-improving AI systems
+- Open-source LLM evaluation frameworks
+- LoRA paper: "LoRA: Low-Rank Adaptation of Large Language Models"
+
+### Community
+
+- Thanks to all contributors and testers
+- Special thanks to the open-source community
+
+---
+### Support Channels
+
+- **GitHub Issues:** [Report bugs](https://github.com/RK0297/Intune/issues)
+- **GitHub Discussions:** [Ask questions](https://github.com/RK0297/Intune/discussions)
+- **Email:** intune-support@example.com
+
+---
+
+## 📊 Project Status
+
+![Status](https://img.shields.io/badge/Status-Active_Development-success)
+![Last Updated](https://img.shields.io/badge/Last_Updated-November_2025-blue)
+![Maintenance](https://img.shields.io/badge/Maintained-Yes-green)
+
+**Current Version:** 1.0.0  
+**Last Updated:** November 16, 2025  
+**Status:** ✅ Active Development
+
+### Roadmap
+
+- [x] Core evaluation system
+- [x] Automated fine-tuning
+- [x] Web interface
+- [ ] Docker deployment
+- [ ] Multi-model support
+- [ ] Real-time monitoring dashboard
+- [ ] A/B testing framework
+- [ ] Distributed training
+
+---
+
+## ⭐ Star History
+
+If you find this project useful, please consider giving it a star!
+
+[![Star History](https://img.shields.io/github/stars/RK0297/Intune?style=social)](https://github.com/RK0297/Intune)
 
 ---
 
 <div align="center">
 
-**Built for the AI/ML Community**
+**Built with ❤️ by the Intune Team**
 
-[Star this repository](https://github.com/Self-eval-llm/Intune-Backend) if you find it useful!
+[⬆ Back to Top](#intune---self-improving-llm-evaluation-framework)
 
 </div>
