@@ -1,0 +1,9 @@
+[submodule "Intune_Backend"]
+	path = Intune_Backend
+	url = https://github.com/Self-eval-llm/Intune-Backend.git
+[submodule "Intune_OpenAI_Backend"]
+	path = Intune_OpenAI_Backend
+	url = https://github.com/Self-eval-llm/Intune_OpenAI_Backend
+[submodule "Intune-Frontend"]
+	path = Intune-Frontend
+	url = https://github.com/Self-eval-llm/Intune-Frontend.git
