@@ -16,9 +16,9 @@ An end-to-end framework for training, evaluating, and iteratively improving Larg
 | Name                      | Roll Number | GitHub Profile |
 |---------------------------|-------------|----------------|
 | Radhakrishna Bharuka      | 24BDS063    | [@RK0297](https://github.com/RK0297) |
-| Abhang Pawar              | 24BDS054    | [@abhangpawar](https://github.com/abhangpawar) |
-| Nilesh Dwivedi            | 24BDS048    | [@nilesh](https://github.com/nilesh) |
-| Rushikesh Masalkar        | 24BDS040    | [@rushikesh](https://github.com/rushikesh) |
+| Abhang Pawar              | 24BDS054    | [@Tech-Abhang](https://github.com/Tech-Abhang) |
+| Nilesh Dwivedi            | 24BDS048    | [@Nilesh-195](https://github.com/Nilesh-195) |
+| Rushikesh Masalkar        | 24BDS040    | [@RushikeshMasalkar](https://github.com/RushikeshMasalkar) |
 
 ---
 
